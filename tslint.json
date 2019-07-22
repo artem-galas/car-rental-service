@@ -12,13 +12,13 @@
     "directive-selector": [
       true,
       "attribute",
-      "app",
+      "crs",
       "camelCase"
     ],
     "component-selector": [
       true,
       "element",
-      "app",
+      "crs",
       "kebab-case"
     ],
     "import-blacklist": [
@@ -67,7 +67,14 @@
       "as-needed"
     ],
     "object-literal-sort-keys": false,
-    "ordered-imports": false,
+    "ordered-imports": [
+      true,
+      {
+        "import-sources-order": "any",
+        "named-imports-order": "case-insensitive",
+        "grouped-imports": false
+      }
+    ],
     "quotemark": [
       true,
       "single"
@@ -84,7 +91,24 @@
     "template-banana-in-box": true,
     "template-no-negated-async": true,
     "use-lifecycle-interface": true,
-    "use-pipe-transform-interface": true
+    "use-pipe-transform-interface": true,
+    "no-invalid-this": [
+      true,
+      "check-function-in-method"
+    ],
+    "newline-before-return": true,
+    "newline-per-chained-call": true,
+    "align": [
+      true,
+      "parameters",
+      "statements"
+    ],
+    "angular-whitespace": [
+      true,
+      "check-interpolation",
+      "check-semicolon"
+    ],
+    "import-destructuring-spacing": true
   },
   "rulesDirectory": [
     "codelyzer"

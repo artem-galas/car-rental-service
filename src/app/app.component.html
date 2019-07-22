@@ -1,1 +1,14 @@
-<router-outlet></router-outlet>
+<mat-sidenav-container>
+  <mat-sidenav #slidenav mode="over" fixedInViewport="true">
+    <crs-sidenav-menu></crs-sidenav-menu>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="main-container">
+      <crs-header [slidenav]="slidenav"></crs-header>
+
+      <div class="content">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

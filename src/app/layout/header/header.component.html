@@ -1,0 +1,19 @@
+<header>
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <button mat-icon-button class="material-drawer-button" (click)="slidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span class="spacer"></span>
+      <mat-icon class="icon pointer" [matMenuTriggerFor]="menu">person</mat-icon>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item [routerLink]="['auth', 'sign-in']">
+          Sign In <mat-icon class="icon pointer">get_app</mat-icon>
+        </button>
+        <button mat-menu-item [routerLink]="['auth', 'sign-up']">
+          Sign Up <mat-icon class="icon pointer">person_add</mat-icon>
+        </button>
+      </mat-menu>
+    </mat-toolbar-row>
+  </mat-toolbar>
+</header>

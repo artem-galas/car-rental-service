@@ -1,0 +1,39 @@
+@import "variables";
+
+.group {
+  border-top: 1px solid #e0e0e0;
+  margin-top: 7px;
+  padding-top: 8px;
+  &:first-child {
+    border-top: none;
+    padding-top: 0;
+  }
+}
+
+.label {
+  font-weight: 500;
+  height: 48px;
+  padding: 0 16px;
+}
+
+mat-list {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 0;
+  mat-list-item {
+    outline: none;
+    cursor: pointer;
+    mat-icon {
+      color: rgba(0, 0, 0, 0.54);
+      margin-right: 32px;
+    }
+    &.active {
+      background-color: $primary;
+      color: $light-primary-text;
+      mat-icon {
+        color: inherit;
+      }
+    }
+  }
+}

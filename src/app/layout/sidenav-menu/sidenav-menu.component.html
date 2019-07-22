@@ -1,0 +1,15 @@
+<mat-list>
+  <div class="group">
+    <mat-list-item [routerLink]="['home']">
+      Car Rental Service
+    </mat-list-item>
+  </div>
+  <div class="group">
+    <mat-list-item [routerLink]="['rent/available-cars']" routerLinkActive="active">
+      <mat-icon>commute</mat-icon>Available cars
+    </mat-list-item>
+    <mat-list-item [routerLink]="['/my-rental']" routerLinkActive="active">
+      <mat-icon>directions_car</mat-icon>My rentals
+    </mat-list-item>
+  </div>
+</mat-list>

@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material';
+
+import { AuthService } from '../shared/services/auth.service';
 
 @Component({
   selector: 'crs-sign-up',
@@ -9,20 +12,28 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class SignUpComponent implements OnInit {
   signUpForm: FormGroup;
 
-  constructor(private readonly fb: FormBuilder) { }
+  constructor(private readonly fb: FormBuilder,
+              private readonly authService: AuthService,
+              private readonly snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.buildForm();
   }
 
   submitSignUpForm() {
-    console.log(this.signUpForm.value);
+    this.authService.signUp(this.signUpForm.value)
+      .subscribe(
+        user => console.log(user),
+        (message: string) => {
+          this.snackBar.open(message, 'Ok');
+        }
+      );
   }
 
   private buildForm() {
     this.signUpForm = this.fb.group({
-      username: [null, Validators.compose(
-        [Validators.required]
+      email: [null, Validators.compose(
+        [Validators.required, Validators.email]
       )],
       fullName: [null, Validators.compose(
         [Validators.required]
@@ -30,9 +41,6 @@ export class SignUpComponent implements OnInit {
       password: [null, Validators.compose(
         [Validators.required, Validators.minLength(6)]
       )],
-      passwordConfirm: [null, Validators.compose(
-        [Validators.required, Validators.minLength(6)]
-      )]
     });
   }
 

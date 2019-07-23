@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { MaterialModule, SharedModule } from '~/framework';
 
@@ -12,7 +13,8 @@ import { SignUpComponent } from './sign-up/sign-up.component';
     SharedModule,
     MaterialModule,
     ReactiveFormsModule,
-    AuthRoutingModule
+    AuthRoutingModule,
+    MatSnackBarModule
   ],
   declarations: [
     SignInComponent,

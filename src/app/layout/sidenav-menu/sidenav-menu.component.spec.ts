@@ -1,4 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatListModule } from '@angular/material';
+import { RouterTestingModule } from '@angular/router/testing';
+
+import { MaterialModule } from '~/framework';
 
 import { SidenavMenuComponent } from './sidenav-menu.component';
 
@@ -8,6 +12,11 @@ describe('SidenavMenuComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        MaterialModule,
+        MatListModule,
+        RouterTestingModule
+      ],
       declarations: [ SidenavMenuComponent ]
     })
     .compileComponents();
@@ -20,6 +29,7 @@ describe('SidenavMenuComponent', () => {
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(component)
+      .toBeTruthy();
   });
 });

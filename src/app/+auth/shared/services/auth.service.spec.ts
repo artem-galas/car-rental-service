@@ -20,7 +20,17 @@ const fakeAuthState = new BehaviorSubject(null);
 const fakeSignInHandler = (email, password): Promise<any> => {
   fakeAuthState.next(userMock);
 
-  return Promise.resolve(userMock);
+  return Promise.resolve({ user: userMock });
+};
+
+const fakeSignUpHandler = (email, password): Promise<any> => {
+  fakeAuthState.next(userMock);
+
+  return Promise.resolve({
+    user: {
+      updateProfile: () => Promise.resolve()
+    }
+  });
 };
 
 const fakeSignOutHandler = (): Promise<any> => {
@@ -29,10 +39,6 @@ const fakeSignOutHandler = (): Promise<any> => {
   return Promise.resolve();
 };
 
-const fakeUpdateProfile = (): Promise<any> => {
-  return Promise.resolve();
-}
-
 
 const angularFireAuthStub = {
   authState: fakeAuthState,
@@ -40,7 +46,7 @@ const angularFireAuthStub = {
     createUserWithEmailAndPassword: jasmine
       .createSpy('createUserWithEmailAndPassword')
       .and
-      .callFake(fakeSignInHandler),
+      .callFake(fakeSignUpHandler),
     signInWithEmailAndPassword: jasmine
       .createSpy('signInWithEmailAndPassword')
       .and
@@ -49,11 +55,6 @@ const angularFireAuthStub = {
       .createSpy('signOut')
       .and
       .callFake(fakeSignOutHandler),
-    user: {
-      updateProfile: jasmine.createSpy('updateProfile')
-        .and
-        .callFake(fakeUpdateProfile)
-    }
   },
 };
 

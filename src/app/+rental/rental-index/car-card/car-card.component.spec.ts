@@ -1,25 +1,58 @@
+import { Component, ViewChild } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { CarCardComponent } from './car-card.component';
+import { MaterialModule } from '~/framework';
+import { CarDto } from '~/shared/dto';
+
+const mockCar: CarDto = {
+  id: 'ABC1',
+  image: '',
+  model: 'Audi',
+  price: 33
+};
 
 describe('CarCardComponent', () => {
+  let testHostComponent: TestHostComponent;
+  let testHostFixture: ComponentFixture<TestHostComponent>;
   let component: CarCardComponent;
-  let fixture: ComponentFixture<CarCardComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CarCardComponent ]
+      imports: [
+        MaterialModule,
+        RouterTestingModule
+      ],
+      declarations: [
+        TestHostComponent,
+        CarCardComponent
+      ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CarCardComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    testHostFixture = TestBed.createComponent(TestHostComponent);
+    testHostComponent = testHostFixture.componentInstance;
+    component = testHostComponent.componentUnderTestComponent;
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    testHostComponent.componentUnderTestComponent.car = mockCar;
+    testHostFixture.detectChanges();
+
+    expect(component)
+      .toBeTruthy();
   });
+
+
+  @Component({
+    selector: 'host-component',
+    template: `<crs-car-card></crs-car-card>`
+  })
+  class TestHostComponent {
+    @ViewChild(CarCardComponent, {static: true})
+    public componentUnderTestComponent: CarCardComponent;
+  }
 });

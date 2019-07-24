@@ -16,11 +16,11 @@ export class MyRentalService {
               private readonly tokenService: TokenService) { }
 
   getMyRental(): Observable<Array<MyRentalDto>> {
-    return this.afStore.collection(`user-rental/${this.tokenService.currentUser.uid}/cars`)
+    return this.afStore.collection<UserRentalDto>(`user-rental/${this.tokenService.currentUser.uid}/cars`)
       .snapshotChanges()
       .pipe(
         map(actions => actions.map(a => {
-          const data = a.payload.doc.data() as UserRentalDto;
+          const data = a.payload.doc.data();
           const id = a.payload.doc.id;
 
           return { id, ...data };

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 
-import { from, throwError } from 'rxjs';
+import { from, Observable, throwError } from 'rxjs';
 import { CarDto } from '~/shared/dto';
 import { TokenService } from '~/shared/services';
 import { catchError, map } from 'rxjs/operators';
@@ -18,7 +18,7 @@ export class RentalService {
               private readonly tokenService: TokenService) {
   }
 
-  getCars() {
+  getCars(): Observable<Array<CarDto>> {
     return this.afStore
       .collection<CarDto>('cars')
       .snapshotChanges()

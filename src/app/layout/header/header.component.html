@@ -4,15 +4,26 @@
       <button mat-icon-button class="material-drawer-button" (click)="slidenav.toggle()">
         <mat-icon>menu</mat-icon>
       </button>
+      <span>Car Rental Service</span>
       <span class="spacer"></span>
       <mat-icon class="icon pointer" [matMenuTriggerFor]="menu">person</mat-icon>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item [routerLink]="['auth', 'sign-in']">
-          Sign In <mat-icon class="icon pointer">get_app</mat-icon>
-        </button>
-        <button mat-menu-item [routerLink]="['auth', 'sign-up']">
-          Sign Up <mat-icon class="icon pointer">person_add</mat-icon>
-        </button>
+        <ng-container *ngIf="afAuth.user | async as user; else showLogin">
+          <button mat-menu-item [routerLink]="['my-rental']">
+            {{ user.displayName }}
+          </button>
+          <button mat-menu-item (click)="afAuth.auth.signOut()">
+            Sign Out <mat-icon class="icon pointer">exit_to_app</mat-icon>
+          </button>
+        </ng-container>
+        <ng-template #showLogin>
+          <button mat-menu-item [routerLink]="['auth', 'sign-in']">
+            Sign In <mat-icon class="icon pointer">get_app</mat-icon>
+          </button>
+          <button mat-menu-item [routerLink]="['auth', 'sign-up']">
+            Sign Up <mat-icon class="icon pointer">person_add</mat-icon>
+          </button>
+        </ng-template>
       </mat-menu>
     </mat-toolbar-row>
   </mat-toolbar>

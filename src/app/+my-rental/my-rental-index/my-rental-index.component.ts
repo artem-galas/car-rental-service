@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { from, Observable, of } from 'rxjs';
-import { CarDto } from '~/shared/dto';
+import { Observable } from 'rxjs';
+import { CarDto, MyRentalDto } from '~/shared/dto';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { MyRentalService } from '~/+my-rental/shared/services/my-rental.service';
-import { DocumentReference } from '@angular/fire/firestore';
 import { BaseComponent } from '~/framework';
 import { MatSnackBar } from '@angular/material';
+import { TokenService } from '~/shared/services';
 
 @Component({
   selector: 'crs-my-rental-index',
@@ -14,12 +14,11 @@ import { MatSnackBar } from '@angular/material';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MyRentalIndexComponent extends BaseComponent implements OnInit {
-  myRentals$: Observable<Array<CarDto>>;
-  // myRentals$: Observable<Array<{id: DocumentReference}>>;
+  myRentals$: Observable<Array<MyRentalDto>>;
 
-  constructor(public afAuth: AngularFireAuth,
-              private readonly myRentalService: MyRentalService,
-              private readonly snackBar: MatSnackBar) {
+  constructor(private readonly myRentalService: MyRentalService,
+              private readonly snackBar: MatSnackBar,
+              public readonly tokenService: TokenService) {
     super();
   }
 
@@ -44,11 +43,6 @@ export class MyRentalIndexComponent extends BaseComponent implements OnInit {
 
   private loadMyRentals() {
     this.myRentals$ = this.myRentalService.getMyRental();
-
-    // this.myRentalService.getMyRental()
-    //   .subscribe(res => {
-    //     console.log(res);
-    //   });
   }
 
 }

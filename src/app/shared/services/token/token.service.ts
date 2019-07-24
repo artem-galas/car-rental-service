@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 
-import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { User } from 'firebase';
 
 /**
  * TokenService
@@ -14,7 +14,18 @@ import { environment } from 'src/environments/environment';
 })
 export class TokenService {
 
-  constructor(private readonly http: HttpClient) {}
+  currentUser;
+  constructor(private readonly afAuth: AngularFireAuth) {
+    this.afAuth.authState.subscribe(user => {
+      if (user) {
+        this.currentUser = {
+          email: user.email,
+          displayName: user.displayName,
+          uid: user.uid
+        };
+      }
+    });
+  }
 
   static getToken(): string {
     return localStorage.getItem(environment.token);
@@ -39,14 +50,5 @@ export class TokenService {
       .replace('_', '/');
 
     return JSON.parse(window.atob(base64));
-  }
-
-  /**
-   * loadUser
-   * @description
-   * Get user information from server
-   */
-  loadUser(): Observable<any> {
-    return this.http.get(`/api/profile`);
   }
 }

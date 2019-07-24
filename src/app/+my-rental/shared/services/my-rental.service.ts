@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
-import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFirestore } from '@angular/fire/firestore';
 
-import { combineLatest, from, of, throwError } from 'rxjs';
+import { combineLatest, from, Observable, of, throwError } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 
-import { CarDto } from '~/shared/dto';
+import { CarDto, MyRentalDto, UserRentalDto } from '~/shared/dto';
+import { TokenService } from '~/shared/services';
 
 @Injectable({
   providedIn: 'root'
@@ -13,36 +13,23 @@ import { CarDto } from '~/shared/dto';
 export class MyRentalService {
 
   constructor(private readonly afStore: AngularFirestore,
-              private readonly afAuth: AngularFireAuth) { }
+              private readonly tokenService: TokenService) { }
 
-  getMyRental() {
-    return this.afAuth.user
+  getMyRental(): Observable<Array<MyRentalDto>> {
+    return this.afStore.collection(`user-rental/${this.tokenService.currentUser.uid}/cars`)
+      .snapshotChanges()
       .pipe(
-        switchMap(user => {
-          return this.afStore.collection(`user-rental/${user.uid}/cars`)
-            .stateChanges()
-            .pipe(
-              map(actions => actions.map(a => {
-                const data = a.payload.doc.data() as {ref: DocumentReference};
-                const id = a.payload.doc.id;
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as UserRentalDto;
+          const id = a.payload.doc.id;
 
-                return { id, refPath: data.ref.path };
-              }))
-            );
-        }),
-        switchMap(data => {
-          if (data.length === 0) {
+          return { id, ...data };
+        })),
+        switchMap(rentals => {
+          if (rentals.length === 0) {
             return of([]);
           }
-
-          const cars = data.map(cur => this.afStore.doc<CarDto>(cur.refPath)
-            .valueChanges()
-            .pipe(
-              map(d => {
-                return { ...d, id: cur.id };
-              })
-            )
-          );
+          const cars = this.getCarsDocumentFromRentals(rentals);
 
           return combineLatest(cars);
         })
@@ -50,14 +37,30 @@ export class MyRentalService {
   }
 
   backCar(collectionId: string) {
-    return this.afAuth.user
+    return from(
+      this.afStore.collection(`user-rental/${this.tokenService.currentUser.uid}/cars`)
+        .doc(collectionId)
+        .delete()
+      )
       .pipe(
-        switchMap(user => {
-          return this.afStore.collection<{cars: Array<DocumentReference>}>(`user-rental/${user.uid}/cars`)
-            .doc(collectionId)
-            .delete();
-        }),
         catchError(error => throwError(error.message as string))
       );
+  }
+
+  private getCarsDocumentFromRentals(rentals: Array<UserRentalDto>) {
+    return rentals.map(cur => this.afStore.doc<CarDto>(cur.ref.path)
+      .valueChanges()
+      .pipe(
+        map(d => {
+          return {
+            model: d.model,
+            id: cur.id,
+            image: d.image,
+            to: cur.to.toDate(),
+            from: cur.from.toDate(),
+          } as MyRentalDto;
+        })
+      )
+    );
   }
 }

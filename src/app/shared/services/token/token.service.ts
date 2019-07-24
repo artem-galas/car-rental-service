@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 import { environment } from 'src/environments/environment';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { User } from 'firebase';
 
-/**
- * TokenService
- *
- * Manipulate with jwtToken and localStorage
- */
+export interface CurrentUser {
+  email: string;
+  uid: string;
+  displayName: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class TokenService {
 
-  currentUser;
+  currentUser: CurrentUser;
   constructor(private readonly afAuth: AngularFireAuth) {
     this.afAuth.authState.subscribe(user => {
       if (user) {

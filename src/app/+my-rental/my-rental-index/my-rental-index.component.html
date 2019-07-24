@@ -1,0 +1,39 @@
+<mat-card class="profile-card">
+  <mat-card-title>
+    <h2>Hello, {{ (afAuth.user | async)?.displayName }}</h2>
+  </mat-card-title>
+  <mat-card-content>
+    <ng-container *ngIf="(myRentals$ | async) as myRentals">
+      <ng-container *ngIf="myRentals.length > 0; else noActiveRentals">
+        <p class="card-content-title">This is your list of rented cars: </p>
+        <mat-list>
+          <mat-list-item *ngFor="let car of myRentals">
+            <img matListAvatar [src]="car.image" [alt]="car.model">
+            <p matLine>{{ car.model }}</p>
+            <button mat-button color="warn" (click)="backCar(car.id)">Back car</button>
+          </mat-list-item>
+        </mat-list>
+      </ng-container>
+    </ng-container>
+    <ng-template #noActiveRentals>
+      <p class="card-content-title">You don't have any active rentals</p>
+      <button class="full-width" mat-flat-button color="primary" [routerLink]="['/rental']">Start rental</button>
+    </ng-template>
+<!--    <mat-list>-->
+<!--      <mat-list-item *ngFor="let ref of (myRentals$ | async)">-->
+<!--        <ng-container *ngIf="(ref.id | doc | async) as car">-->
+<!--          <img matListAvatar [src]="car.image" [alt]="car.model">-->
+<!--          <p matLine>{{ car.model }}</p>-->
+<!--          <button mat-button color="warn" (click)="backCar(ref.id)">Back car</button>-->
+<!--        </ng-container>-->
+<!--      </mat-list-item>-->
+
+
+<!--      <mat-list-item *ngFor="let car of (myRentals$ | async)">-->
+<!--        <img matListAvatar [src]="car.image" [alt]="car.model">-->
+<!--        <p matLine>{{ car.model }}</p>-->
+<!--        <button mat-button color="warn" (click)="backCar(car)">Back car</button>-->
+<!--      </mat-list-item>-->
+<!--    </mat-list>-->
+  </mat-card-content>
+</mat-card>

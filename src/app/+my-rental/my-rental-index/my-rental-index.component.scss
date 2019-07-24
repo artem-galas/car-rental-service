@@ -1,0 +1,25 @@
+@import "variables";
+
+:host {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.profile-card {
+  width: 375px;
+}
+
+mat-card-title {
+  h2 {
+    color: $black-87-opacity;
+    font-size: 20px;
+    font-weight: 500;
+    margin: 0;
+  }
+}
+
+.card-content-title {
+  font-size: 16px;
+  margin-bottom: 0;
+}

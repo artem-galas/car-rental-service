@@ -12,7 +12,7 @@
           <button mat-menu-item [routerLink]="['my-rental']">
             {{ user.displayName }}
           </button>
-          <button mat-menu-item (click)="afAuth.auth.signOut()">
+          <button mat-menu-item (click)="signOut()">
             Sign Out <mat-icon class="icon pointer">exit_to_app</mat-icon>
           </button>
         </ng-container>

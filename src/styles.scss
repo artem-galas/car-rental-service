@@ -42,3 +42,9 @@ body {
     justify-content: flex-end;
   }
 }
+
+.profile-card {
+  .mat-list-text {
+    flex: 1;
+  }
+}

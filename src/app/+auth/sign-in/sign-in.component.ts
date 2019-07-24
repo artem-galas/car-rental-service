@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { AuthService } from '~/+auth/shared/services/auth.service';
 import { MatSnackBar } from '@angular/material';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'crs-sign-in',
@@ -13,7 +14,8 @@ export class SignInComponent implements OnInit {
 
   constructor(private readonly fb: FormBuilder,
               private readonly authService: AuthService,
-              private readonly snackBar: MatSnackBar) { }
+              private readonly snackBar: MatSnackBar,
+              private readonly router: Router) { }
 
   ngOnInit() {
     this.buildForm();
@@ -23,7 +25,9 @@ export class SignInComponent implements OnInit {
     this.authService
       .signIn(this.signInForm.value)
       .subscribe(
-        (user) => console.log(user),
+        (user) => {
+          this.router.navigate(['my-rental']);
+        },
         (message: string) => {
           this.snackBar.open(message, 'Ok');
         }

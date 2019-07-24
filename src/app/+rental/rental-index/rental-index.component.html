@@ -1,0 +1,7 @@
+<div class="available-cars">
+  <crs-car-card
+    *ngFor="let car of (cars$ | async); trackBy: trackByFn"
+    [car]="car"
+    (selectCar)="bookCar($event)">
+  </crs-car-card>
+</div>

@@ -1,0 +1,12 @@
+<mat-card class="card">
+  <div class="card-image">
+    <img [src]="car.image" [alt]="car.model">
+  </div>
+  <mat-card-content>
+    <div class="car-model">{{ car.model }}</div>
+    <div class="card-footer">
+      <div class="price">{{ car.price | currency : 'EUR' }}/per day</div>
+      <button mat-flat-button color="primary" (click)="selectCar.emit(car)">Book Now</button>
+    </div>
+  </mat-card-content>
+</mat-card>

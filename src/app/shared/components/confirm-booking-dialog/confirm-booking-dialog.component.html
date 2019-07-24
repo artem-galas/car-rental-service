@@ -1,0 +1,24 @@
+<h2 mat-dialog-title>Please select number of days</h2>
+<div mat-dialog-content>
+  <div class="confirm-booking-content">
+    <mat-slider
+      class="full-width"
+      [min]="defaultMinNumberOfDays"
+      [max]="defaultMaxNumberOfDays"
+      step="1"
+      [value]="defaultValueNumberOfDays"
+      [thumbLabel]="true"
+      (change)="numberOfDaysChange($event.value)">
+    </mat-slider>
+
+    <p class="full-price">
+      It will be cost for you:
+      <span class="bold">{{ this.fullPrice | currency:'EUR' }}</span>
+    </p>
+  </div>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button color="accent" (click)="cancel()">Cancel</button>
+  <button mat-button color="primary" (click)="confirm()">Confirm</button>
+</div>

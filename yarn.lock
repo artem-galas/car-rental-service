@@ -645,6 +645,11 @@
     "@types/source-list-map" "*"
     source-map "^0.6.1"
 
+"@veriff/js-sdk@^0.3.4":
+  version "0.3.4"
+  resolved "https://registry.yarnpkg.com/@veriff/js-sdk/-/js-sdk-0.3.4.tgz#a6b46a10e4607e48ff1479e6a516c9369dacedfd"
+  integrity sha512-afYzSdAL05/s54OkE3t2gvNwf+rz3lW+SlzAeUAzE6F5WCE6R2fYRlmCKz/8gxFdshI+BsVivOG+JLZhqrjoqA==
+
 "@webassemblyjs/ast@1.8.5":
   version "1.8.5"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.8.5.tgz#51b1c5fe6576a34953bf4b253df9f0d490d9e359"

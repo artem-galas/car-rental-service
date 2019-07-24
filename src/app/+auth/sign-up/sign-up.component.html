@@ -11,6 +11,10 @@
         <input formControlName="fullName" matInput placeholder="Full Name" required>
       </mat-form-field>
       <mat-form-field class="full-width">
+        <input formControlName="idNumber" matInput placeholder="Id Number" required>
+        <mat-hint>necessary for verification</mat-hint>
+      </mat-form-field>
+      <mat-form-field class="full-width">
         <input formControlName="password" type="password" matInput placeholder="Password" required>
       </mat-form-field>
     </form>
@@ -20,3 +24,5 @@
     <a mat-button color="primary" [routerLink]="['/auth/sign-in']">Already have an account?</a>
   </mat-card-actions>
 </mat-card>
+
+<div id="veriff-root"></div>

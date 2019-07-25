@@ -5,10 +5,10 @@
     </mat-list-item>
   </div>
   <div class="group">
-    <mat-list-item [routerLink]="['rental']" routerLinkActive="active">
+    <mat-list-item [routerLink]="['rental']" (click)="slidenav.close()" routerLinkActive="active">
       <mat-icon>commute</mat-icon>Available cars
     </mat-list-item>
-    <mat-list-item [routerLink]="['my-bookings']" routerLinkActive="active">
+    <mat-list-item (click)="goToMyBookings()" routerLinkActive="active">
       <mat-icon>directions_car</mat-icon>My Bookings
     </mat-list-item>
   </div>

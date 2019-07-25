@@ -1,6 +1,9 @@
+@import "variables";
+
 .header-background {
   overflow: hidden;
-  background: #3f51b5;
+  background: $primary;
+  margin: -15px;
 }
 
 .header-section {

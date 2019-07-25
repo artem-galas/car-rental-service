@@ -13,13 +13,13 @@
             <p matLine>
               {{ rental.from | date: 'shortDate' }} - {{ rental.to | date: 'shortDate' }}
             </p>
-            <button mat-button color="warn" (click)="backCar(rental.id)">Back car</button>
+            <button mat-button color="warn" (click)="backCar(rental.id)">Return</button>
           </mat-list-item>
         </mat-list>
       </ng-container>
       <ng-template #noActiveRentals>
-        <p class="card-content-title">You don't have any active rentals</p>
-        <button class="full-width" mat-flat-button color="primary" [routerLink]="['/rental']">Start rental</button>
+        <p class="card-content-title no-bookings">You don't have any active rentals</p>
+        <button class="full-width" mat-flat-button color="primary" [routerLink]="['/rental']">Book a Car</button>
       </ng-template>
     </ng-container>
   </mat-card-content>

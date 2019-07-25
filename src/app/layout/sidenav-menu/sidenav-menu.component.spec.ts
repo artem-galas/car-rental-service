@@ -5,6 +5,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { MaterialModule } from '~/framework';
 
 import { SidenavMenuComponent } from './sidenav-menu.component';
+import { TokenService } from '~/shared/services';
 
 describe('SidenavMenuComponent', () => {
   let component: SidenavMenuComponent;
@@ -17,7 +18,18 @@ describe('SidenavMenuComponent', () => {
         MatListModule,
         RouterTestingModule
       ],
-      declarations: [ SidenavMenuComponent ]
+      declarations: [ SidenavMenuComponent ],
+      providers: [
+        {
+          provide: TokenService, useValue: {
+            currentUser: {
+              email: 'fake@mail.com',
+              displayName: 'Fake Name',
+              uid: 'fakeUid'
+            }
+          }
+        }
+      ]
     })
     .compileComponents();
   }));

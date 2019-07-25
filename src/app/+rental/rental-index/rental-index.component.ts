@@ -9,6 +9,8 @@ import { CarDto } from '~/shared/dto';
 import { ConfirmBookingDialogCloseData, ConfirmBookingDialogComponent, ConfirmBookingDialogData } from '~/shared/components';
 
 import { RentalService } from '../shared/services/rental.service';
+import { TokenService } from '~/shared/services';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'crs-rental-index',
@@ -21,7 +23,9 @@ export class RentalIndexComponent extends BaseComponent implements OnInit {
   dialogRef: MatDialogRef<ConfirmBookingDialogComponent, ConfirmBookingDialogCloseData>;
   constructor(private readonly rentalService: RentalService,
               private readonly dialog: MatDialog,
-              private readonly snackBar: MatSnackBar) {
+              private readonly snackBar: MatSnackBar,
+              private readonly tokenService: TokenService,
+              private readonly router: Router) {
     super();
   }
 
@@ -34,7 +38,11 @@ export class RentalIndexComponent extends BaseComponent implements OnInit {
   }
 
   bookCar(car: CarDto) {
-    this.openConfirmDialog(car);
+    if (this.tokenService.currentUser) {
+      this.openConfirmDialog(car);
+    } else {
+      this.router.navigate(['auth', 'sign-in']);
+    }
   }
 
   private openConfirmDialog(car: CarDto) {

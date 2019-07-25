@@ -9,6 +9,7 @@ import { CarDto } from '~/shared/dto';
 
 import { RentalService } from '~/+rental/shared/services/rental.service';
 import { RentalIndexComponent } from './rental-index.component';
+import { TokenService } from '~/shared/services';
 
 const mockCars: Array<CarDto> = [
   {
@@ -44,6 +45,15 @@ describe('RentalIndexComponent', () => {
       providers: [
         {
           provide: RentalService, useValue: service
+        },
+        {
+          provide: TokenService, useValue: {
+            currentUser: {
+              email: 'fake@mail.com',
+              displayName: 'Fake Name',
+              uid: 'fakeUid'
+            }
+          }
         }
       ]
     })

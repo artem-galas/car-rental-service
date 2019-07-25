@@ -1,4 +1,8 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { MatSidenav } from '@angular/material';
+
+import { TokenService } from '~/shared/services';
 
 @Component({
   selector: 'crs-sidenav-menu',
@@ -7,10 +11,21 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SidenavMenuComponent implements OnInit {
+  @Input()
+  slidenav: MatSidenav;
 
-  constructor() { }
+  constructor(private readonly tokenService: TokenService,
+              private readonly router: Router) { }
 
   ngOnInit() {
   }
 
+  goToMyBookings() {
+    if (this.tokenService.currentUser) {
+      this.router.navigate(['my-bookings']);
+    } else {
+      this.router.navigate(['auth/sign-in']);
+    }
+    this.slidenav.toggle();
+  }
 }

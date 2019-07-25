@@ -23,7 +23,7 @@ const routes: Routes = [
       .then(mod => mod.RentalModule)
   },
   {
-    path: 'my-rental',
+    path: 'my-bookings',
     loadChildren: () => import('./+my-rental/my-rental.module')
       .then(mod => mod.MyRentalModule)
   }

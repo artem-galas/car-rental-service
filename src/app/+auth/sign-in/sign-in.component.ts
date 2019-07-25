@@ -26,7 +26,7 @@ export class SignInComponent implements OnInit {
       .signIn(this.signInForm.value)
       .subscribe(
         (user) => {
-          this.router.navigate(['my-rental']);
+          this.router.navigate(['my-bookings']);
         },
         (message: string) => {
           this.snackBar.open(message, 'Ok');

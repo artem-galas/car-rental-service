@@ -9,9 +9,7 @@
       <mat-icon class="icon pointer" [matMenuTriggerFor]="menu">person</mat-icon>
       <mat-menu #menu="matMenu">
         <ng-container *ngIf="afAuth.user | async as user; else showLogin">
-          <button mat-menu-item [routerLink]="['my-rental']">
-            {{ user.displayName }}
-          </button>
+          <button mat-menu-item [routerLink]="['my-bookings']">My bookings</button>
           <button mat-menu-item (click)="signOut()">
             Sign Out <mat-icon class="icon pointer">exit_to_app</mat-icon>
           </button>

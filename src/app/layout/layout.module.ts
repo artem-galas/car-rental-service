@@ -7,11 +7,13 @@ import { MaterialModule, SharedModule } from '~/framework';
 
 import { HeaderComponent } from './header/header.component';
 import { SidenavMenuComponent } from './sidenav-menu/sidenav-menu.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
     HeaderComponent,
-    SidenavMenuComponent
+    SidenavMenuComponent,
+    FooterComponent
   ],
   imports: [
     SharedModule,
@@ -23,6 +25,7 @@ import { SidenavMenuComponent } from './sidenav-menu/sidenav-menu.component';
   exports: [
     HeaderComponent,
     SidenavMenuComponent,
+    FooterComponent,
     MatSidenavModule
   ]
 })

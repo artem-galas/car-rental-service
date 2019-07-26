@@ -23,6 +23,8 @@ export class TokenService {
           displayName: user.displayName,
           uid: user.uid
         };
+      } else {
+        this.currentUser = null;
       }
     });
   }

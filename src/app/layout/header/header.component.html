@@ -4,7 +4,7 @@
       <button mat-icon-button class="material-drawer-button" (click)="slidenav.toggle()">
         <mat-icon>menu</mat-icon>
       </button>
-      <span>Car Rental Service</span>
+      <span class="pointer" [routerLink]="['home']">Car Rental Service</span>
       <span class="spacer"></span>
       <mat-icon class="icon pointer" [matMenuTriggerFor]="menu">person</mat-icon>
       <mat-menu #menu="matMenu">

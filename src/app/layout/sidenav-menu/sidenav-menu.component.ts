@@ -26,6 +26,6 @@ export class SidenavMenuComponent implements OnInit {
     } else {
       this.router.navigate(['auth/sign-in']);
     }
-    this.slidenav.toggle();
+    this.slidenav.close();
   }
 }

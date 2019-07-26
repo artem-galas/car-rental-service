@@ -1,13 +1,17 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-
-import { MyRentalIndexComponent } from './my-rental-index.component';
-import { MaterialModule } from '~/framework';
-import { MyRentalService } from '~/+my-rental/shared/services/my-rental.service';
-import { MyRentalDto } from '~/shared/dto';
-import { of } from 'rxjs';
+import { By } from '@angular/platform-browser';
 import { MatSnackBarModule } from '@angular/material';
+
+import { from, of } from 'rxjs';
+
+import { MaterialModule } from '~/framework';
+import { MyRentalDto } from '~/shared/dto';
 import { TokenService } from '~/shared/services';
+
+import { MyRentalService } from '../shared/services/my-rental.service';
+import { MyRentalIndexComponent } from './my-rental-index.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 const myRentalMock: Array<MyRentalDto> = [
   {
@@ -30,10 +34,15 @@ describe('MyRentalIndexComponent', () => {
       .and
       .returnValue(of(myRentalMock));
 
+    service.backCar
+      .and
+      .returnValue(from(Promise.resolve()));
+
     TestBed.configureTestingModule({
       imports: [
         MaterialModule,
         MatSnackBarModule,
+        BrowserAnimationsModule,
         RouterTestingModule
       ],
       declarations: [ MyRentalIndexComponent ],
@@ -62,6 +71,25 @@ describe('MyRentalIndexComponent', () => {
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(component)
+      .toBeTruthy();
+  });
+
+  it('should display rentals', () => {
+    const listElements = fixture.debugElement.queryAll(By.css('mat-list-item'));
+
+    expect(listElements.length)
+      .toBe(myRentalMock.length);
+  });
+
+  describe('.backCar', () => {
+    it('should return car', () => {
+      const carID = 'ABC1';
+
+      component.backCar(carID);
+
+      expect(service.backCar)
+        .toHaveBeenCalledWith(carID);
+    });
   });
 });

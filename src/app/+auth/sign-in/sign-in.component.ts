@@ -22,16 +22,20 @@ export class SignInComponent implements OnInit {
   }
 
   submitSignInForm() {
-    this.authService
-      .signIn(this.signInForm.value)
-      .subscribe(
-        (user) => {
-          this.router.navigate(['my-bookings']);
-        },
-        (message: string) => {
-          this.snackBar.open(message, 'Ok');
-        }
-      );
+    if (this.signInForm.valid) {
+      this.authService
+        .signIn(this.signInForm.value)
+        .subscribe(
+          (user) => {
+            this.router.navigate(['my-bookings']);
+          },
+          (message: string) => {
+            this.snackBar.open(message, 'Ok');
+          }
+        );
+    } else {
+      this.snackBar.open('Form is not valid', 'Ok');
+    }
   }
 
   private buildForm() {

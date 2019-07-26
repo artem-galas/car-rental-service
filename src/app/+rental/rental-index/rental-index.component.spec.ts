@@ -1,7 +1,9 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { Router } from '@angular/router';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatDialogModule, MatSnackBarModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSnackBarModule } from '@angular/material';
 
 import { of } from 'rxjs';
 import { MaterialModule } from '~/framework';
@@ -10,6 +12,7 @@ import { CarDto } from '~/shared/dto';
 import { RentalService } from '~/+rental/shared/services/rental.service';
 import { RentalIndexComponent } from './rental-index.component';
 import { TokenService } from '~/shared/services';
+import { ConfirmBookingDialogModule } from '~/shared/components';
 
 const mockCars: Array<CarDto> = [
   {
@@ -25,6 +28,7 @@ describe('RentalIndexComponent', () => {
   let component: RentalIndexComponent;
   let fixture: ComponentFixture<RentalIndexComponent>;
   let service;
+  let router;
 
   beforeEach(async(() => {
     service = jasmine.createSpyObj('RentalService', ['getCars']);
@@ -33,12 +37,17 @@ describe('RentalIndexComponent', () => {
       .and
       .returnValue(of(mockCars));
 
+    router = {
+      navigate: jasmine.createSpy('navigate')
+    };
+
     TestBed.configureTestingModule({
       imports: [
         MaterialModule,
+        BrowserAnimationsModule,
         RouterTestingModule,
         MatSnackBarModule,
-        MatDialogModule
+        ConfirmBookingDialogModule
       ],
       declarations: [ RentalIndexComponent ],
       schemas: [ NO_ERRORS_SCHEMA ],
@@ -54,7 +63,8 @@ describe('RentalIndexComponent', () => {
               uid: 'fakeUid'
             }
           }
-        }
+        },
+        { provide: Router, useValue: router }
       ]
     })
     .compileComponents();
@@ -69,5 +79,24 @@ describe('RentalIndexComponent', () => {
   it('should create', () => {
     expect(component)
       .toBeTruthy();
+  });
+
+  describe('.bookCar', () => {
+    it('should open confirm when user logged in', () => {
+      component.bookCar(mockCars[0]);
+
+      expect(component.dialogRef)
+        .toBeTruthy();
+    });
+
+    it('should navigate if user is not logged in', () => {
+      const tokenService = TestBed.get(TokenService);
+      tokenService.currentUser = null;
+
+      component.bookCar(mockCars[0]);
+
+      expect(router.navigate)
+        .toHaveBeenCalledWith(['auth', 'sign-in']);
+    });
   });
 });

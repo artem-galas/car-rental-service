@@ -9,6 +9,13 @@ import { MaterialModule } from '~/framework';
 import { SignInComponent } from './sign-in.component';
 import { AuthService } from '~/+auth/shared/services/auth.service';
 import { of } from 'rxjs';
+import { Component } from '@angular/core';
+
+@Component({
+  template: ''
+})
+class MockComponent {
+}
 
 describe('SignInComponent', () => {
   let component: SignInComponent;
@@ -17,18 +24,28 @@ describe('SignInComponent', () => {
 
   beforeEach(async(() => {
     authService = jasmine.createSpyObj('AuthService', {
-      signUp: of({})
+      signIn: of({})
     });
 
     TestBed.configureTestingModule({
       imports: [
         ReactiveFormsModule,
         MaterialModule,
-        RouterTestingModule,
+        RouterTestingModule.withRoutes([
+          {
+            path: 'my-bookings',
+            component: MockComponent,
+          },
+          {
+            path: 'auth/sign-in',
+            component: MockComponent
+          }
+        ]),
         MatSnackBarModule,
         BrowserAnimationsModule
       ],
       declarations: [
+        MockComponent,
         SignInComponent,
       ],
       providers: [
@@ -102,6 +119,40 @@ describe('SignInComponent', () => {
         .toBeTruthy();
       expect(signInForm.hasError('required', 'email'))
         .toBeTruthy();
+    });
+  });
+
+  describe('.submitSignInForm', () => {
+    it('should signIn', () => {
+      const formValue = {
+        email: 'fake@mail.com',
+        password: '12345678'
+      };
+
+      component.signInForm.patchValue(formValue);
+
+      fixture.detectChanges();
+
+      component.submitSignInForm();
+
+      expect(authService.signIn)
+        .toHaveBeenCalledWith(formValue);
+    });
+
+    it('should not signUp', () => {
+      const formValue = {
+        fullName: 'Fake Name',
+      };
+
+      component.signInForm.patchValue(formValue);
+
+      fixture.detectChanges();
+
+      component.submitSignInForm();
+
+      expect(authService.signIn)
+        .not
+        .toHaveBeenCalled();
     });
   });
 });

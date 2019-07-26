@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { FirebaseModule, HttpInterceptorModule } from '~/framework';
+import { FirebaseModule } from '~/framework';
 import { LayoutModule } from '~/layout/layout.module';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -16,7 +16,6 @@ import { AppComponent } from './app.component';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    HttpInterceptorModule,
     LayoutModule,
     FirebaseModule.forRoot()
   ],
